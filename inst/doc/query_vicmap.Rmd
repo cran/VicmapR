@@ -1,0 +1,128 @@
+---
+title: "How to Query Vicmap Data"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{How to Query Vicmap Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(VicmapR)
+library(sf)
+library(leaflet)
+
+#check sf installation
+sf::sf_extSoftVersion()
+```
+
+# How to query data
+
+## Searching for data  
+
+In order to begin a query of the WFS server a spatial layer must be selected. To know which layers are available use the `listLayers()` function, which will return ~ 690 layers to choose from. 
+
+```{r}
+available_layers <- listLayers()
+
+head(available_layers, 10)
+```
+
+
+## Vicmap promise
+
+VicmapR introduces a new class called `vicmap_promise`, which is an extension to the `httr::url` class. Essentially this object is how the vicmap query is stored before data is collected. That is to say `vicmap_promise` is essentially a promise of what data will be retrieved. 
+
+In order to generate a new promise the `vicmap_query` function can be used to select the layer. The promise prints a sample of the data (max = 6 rows) as well as the dimensions (nrow and ncol).  
+
+```{r query}
+# query the watercourse layer
+vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN")
+```
+
+## Adding arguments to the query  
+
+The `vicmap_promise` object can be easily added to through piping in of additional functions (e.g. `head()`, `filter()` and `select()`). 
+
+The resulting query can be displayed using the `show_query()` function, which will list the WFS parameters. 
+
+```{r query_arguments}
+vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>%
+  head(50) %>% #return only 50 rows
+  filter(HIERARCHY == "L") %>% # filter the column 'HIERACHY' to values of 'L'
+  select(HIERARCHY, PFI) %>% # select columns 'HIERARCHY' and 'PFI'
+  show_query()
+```
+
+In order to return a spatial data.frame object (`sf`) `collect()` must be used.
+
+```{r collect_query}
+watercourse_data <- vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>%
+  head(50) %>% #return only 50 rows
+  filter(HIERARCHY == "L") %>% # filter the column 'HIERACHY' to values of 'L'
+  select(HIERARCHY, PFI) %>% # select columns 'HIERARCHY' and 'PFI'
+  collect()
+
+str(watercourse_data)
+```
+
+
+## Geometric filters
+
+VicmapR translates numerous geometric filter functions available in the Victorian Government's WFS Geoserver supports numerous [geometric filters](https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#geometric-filters):  
+
++ `EQUALS`   
++ `DISJOINT`   
++ `INTERSECTS`   
++ `TOUCHES`   
++ `CROSSES`   
++ `WITHIN`   
++ `CONTAINS` 
++ `OVERLAPS`   
++ `DWITHIN`   
++ `BEYOND`  
++ `BBOX`  
+
+These filters can be used within the `filter()` function by providing them an object of class `sf/sfc/sfg/bbox`. Below is a leaflet map with the melbourne rail network being read in with the use of three different types of filter functions: `INTERSECTS()`, `BBOX()` and `DWITHIN()`.
+
+```{r filter_spatial, warning = FALSE, message=FALSE, out.width="100%"}
+#### Return objects that intersect melbourne ####
+# Read in an example shape to restrict our query to using geometric filtering
+melbourne <- sf::st_read(system.file("shapes/melbourne.geojson", package="VicmapR"), quiet = F) %>% 
+  sf::st_transform(4283)
+
+# Return data that intersects melbourne
+rail_intersects <- vicmap_query(layer = "datavic:VMTRANS_TR_RAIL") %>% # layer to query
+  filter(INTERSECTS(melbourne)) %>% # more advanced geometric filter
+  collect()
+
+rail_bbox <- vicmap_query(layer = "datavic:VMTRANS_TR_RAIL") %>%
+  filter(BBOX(sf::st_bbox(melbourne))) %>%
+  collect()
+
+rail_dwithin <- vicmap_query(layer = "datavic:VMTRANS_TR_RAIL") %>%
+  filter(DWITHIN(melbourne %>% sf::st_centroid(), distance = 10000, units = "meters")) %>%
+  collect()
+
+leaflet(width = "100%") %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(data = melbourne, color = "grey", group = "Melbourne polygon") %>%
+  addPolygons(data = sf::st_bbox(melbourne) %>% st_as_sfc(), color = "black", group = "Melbourne bbox") %>%
+  addPolylines(data = rail_intersects, color = "Red", group = "INTERSECTS") %>% 
+  addPolylines(data = rail_bbox, color = "Blue", group = "BBOX") %>%
+  addPolylines(data = rail_dwithin, color = "Green", group = "DWITHIN") %>%
+  addLayersControl(baseGroups = c("Melbourne polygon", "Melbourne bbox"), 
+                   overlayGroups = c("INTERSECTS", "BBOX", "DWITHIN")) %>%
+  hideGroup(c("BBOX", "DWITHIN"))
+```
+
+

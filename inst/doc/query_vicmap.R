@@ -38,7 +38,7 @@ watercourse_data <- vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>
 
 str(watercourse_data)
 
-## ----filter_spatial, warning = FALSE, message=FALSE, out.width="100%"---------
+## ----filter_spatial, warning = FALSE, message=FALSE, out.width="100%", eval = knitr::is_html_output(excludes = "markdown")----
 #### Return objects that intersect melbourne ####
 # Read in an example shape to restrict our query to using geometric filtering
 melbourne <- sf::st_read(system.file("shapes/melbourne.geojson", package="VicmapR"), quiet = F) %>% 

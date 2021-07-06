@@ -1,3 +1,16 @@
+# VicmapR 0.1.6  
+* Apache licence is now located at: https://www.apache.org/licenses/LICENSE-2.0.txt, replaced references to this throughout the package (including Readme.Rmd)  
+* The doi address for Teucher et al. (2021) {bcdata} R package paper is now formatted correctly in the DESCRIPTION
+
+# VicmapR 0.1.5
+* Pull request [#26](https://github.com/JustinCally/VicmapR/pull/26) added Apache licencing to the VicmapR package (changed from MIT). The Apache licencing is the same as [bcdata](https://github.com/bcgov/bcdata) and properly recognises the contributions of the authors. R scripts that used code from bcdata now have modifications listed as per the Apache 2.0 guidelines. 
+* Andy Teucher, Sam Albers and Stephanie Hazlitt added as authors.  
+
+# VicmapR 0.1.4
+* Add `httr::stop_for_status()` in several places for more informative errors  
+* Add a `check_geoserver()` function to test whether the geoserver is operational (tests added)  
+* Add pkgdown favicons  
+
 # VicmapR 0.1.3  
 * Fixed issues relating to CRAN submission for version 0.1.2. They were:  
     - Link to the used webservices added to the description field of DESCRIPTION.

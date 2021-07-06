@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# VicmapR <img src='man/figures/VicmapR-Hex-2.png' align="right" height="139" />
+# VicmapR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
@@ -11,21 +11,29 @@ coverage](https://codecov.io/gh/JustinCally/VicmapR/branch/master/graph/badge.sv
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R build
 status](https://github.com/JustinCally/VicmapR/workflows/R-CMD-check/badge.svg)](https://github.com/JustinCally/VicmapR/actions)
-[![Devel
-version](https://img.shields.io/badge/devel%20version-0.1.1-blue.svg)](https://github.com/JustinCally/VicmapR)
-[![Code
-size](https://img.shields.io/github/languages/code-size/JustinCally/VicmapR.svg)](https://github.com/JustinCally/VicmapR)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/VicmapR)](https://CRAN.R-project.org/package=VicmapR)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/VicmapR?color=ff69b4)](https://cran.r-project.org/package=VicmapR)
+<!-- [![Devel version](https://img.shields.io/badge/devel%20version-0.1.3-blue.svg)](https://github.com/JustinCally/VicmapR) -->
+<!-- [![Code size](https://img.shields.io/github/languages/code-size/JustinCally/VicmapR.svg)](https://github.com/JustinCally/VicmapR) -->
 <!-- badges: end -->
 
 The goal of VicmapR is to provide functions to easily access Victorian
 Government spatial data through their WFS (Web Feature Service). VicmapR
-uses a lazy querying approach (developed from
-[bcdata](https://github.com/bcgov/bcdata)), which allows for a
-responsive and precise querying process.
+leverages code and a lazy querying approach developed by [Teucher et
+al. (2021)](https://joss.theoj.org/papers/10.21105/joss.02927) for the
+[{bcdata} R package](https://bcgov.github.io/bcdata/), which allows for
+a responsive and precise querying process.
 
 ## Installation
 
-You can install the the development version from
+You can install the released version from CRAN with:
+
+``` r
+install.packages("VicmapR")
+```
+
+Or you can install the the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -59,6 +67,10 @@ library(VicmapR)
 #> The following object is masked from 'package:stats':
 #> 
 #>     filter
+
+# Check to see if the geoserver is working. It will error if it is not working  
+check_geoserver()
+#> [1] "Success: (200) OK"
 
 listLayers(pattern = "trees", ignore.case = T)
 #>                                Name
@@ -185,3 +197,20 @@ catchments <- vicmap_query("ahgf_shcatch:AHGFCatchment") %>%
 ***Note**: Using other Geoserver WFS urls will not necessarily work as
 expected due to the potential differences in the capabilities of the
 Geoserver instance*
+
+### License
+
+Copyright 2018 Province of British Columbia  
+Modifications Copyright 2020 Justin Cally
+
+Licensed under the Apache License, Version 2.0 (the “License”); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at
+
+<https://www.apache.org/licenses/LICENSE-2.0.txt>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

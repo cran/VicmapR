@@ -1,10 +1,10 @@
-7d498613cf0f0317a91854be08a0463e *DESCRIPTION
+03c18d958c1d3ae6dee39ffc8b15ad9d *DESCRIPTION
 31a711897235942715f0a33b2ea366fd *NAMESPACE
-b49b99c83742639ea483c25ea080b971 *NEWS.md
+09f6b1aae0627ea2a76445137ab07d05 *NEWS.md
 6b43eca2658d8a5a45493333c050e1d1 *R/build-query.R
 01d984ed18a1c58c4edac5bfa678d002 *R/check_geoserver.R
 988e7050d9b5370b71684e47430a3e58 *R/cql-predicates.R
-5ce51c224d0bd196a63a67b76d67f3f0 *R/cql-translate.R
+bd4f17a01a3436d162ad8a12d986578d *R/cql-translate.R
 cebced8ea5afb608c413e1ed9fb27489 *R/filter.R
 5958aa7108f55695269714103b9367ea *R/globals.R
 c16969aaf2fdb5ec9d71b73dae052f57 *R/listFeatures.R
@@ -22,10 +22,10 @@ b56ff2b193ecba52f9ec7f3b10cca008 *R/utils-pipe.R
 22ed4e3a58eb8a4eb970f877b0f87a14 *build/vignette.rds
 2fce97bb3182c371f0914781139d700f *inst/doc/beginner_vicmap.R
 053d0acb2521ae6ba60dc1b515887a66 *inst/doc/beginner_vicmap.Rmd
-1a5c783c495187b5959d3dc2673ad679 *inst/doc/beginner_vicmap.html
+2b11edce82554deecbd09875f2123aa9 *inst/doc/beginner_vicmap.html
 2b3e1dc295878451febf708ce0f5687e *inst/doc/query_vicmap.R
 40f0e31891831a9e61bc517f69987ce9 *inst/doc/query_vicmap.Rmd
-17278588a7b26e888fb02643117be70e *inst/doc/query_vicmap.html
+d7fd6a66ff835d9440ba46a35932c3f1 *inst/doc/query_vicmap.html
 1c037acd8415ba7b273bb344b55772fc *inst/shapes/cycle_route.geojson
 2f6e772459e70c528bab6ef8dc811c41 *inst/shapes/melbourne.geojson
 9553ae742a498170d0d6de141cfa5041 *man/CQL.Rd

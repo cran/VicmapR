@@ -1,5 +1,13 @@
-# VicmapR 0.1.10
-* S3 Method consistency
+# VicmapR 0.2.0
+* Migration of geoserver platform now supported as the default. Details are available in the `vignette("migration_odp")` vignette   
+* Fixed issue with various installations of gdal/proj swapping axis order. Now use a (hopefully) more consistent approach, allowing geometric filters to work better.  
+* Change github actions to r-lib/actions v2 
+* Perform checks on newer ubuntu  
+* Add tests to geometric filters  
+* Minimum sf version increased   
+* Minimum dbplyr version now 2.2.0  
+* By default in `listLayers()` pulls down abstracts and metadataID, argument provided to only pull down titles    
+* Suppress message when first using filter
 
 # VicmapR 0.1.9  
 * Addition of tutorial for new users, written by Rachel Swain (Vicmap for Beginners) (PR#36, #41)  

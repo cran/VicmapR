@@ -9,13 +9,13 @@
 coverage](https://codecov.io/gh/JustinCally/VicmapR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/JustinCally/VicmapR?branch=master)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![R build
-status](https://github.com/JustinCally/VicmapR/workflows/R-CMD-check/badge.svg)](https://github.com/JustinCally/VicmapR/actions)
+<!-- [![R build status](https://github.com/JustinCally/VicmapR/workflows/R-CMD-check/badge.svg)](https://github.com/JustinCally/VicmapR/actions) -->
 [![CRAN
 status](https://www.r-pkg.org/badges/version/VicmapR)](https://CRAN.R-project.org/package=VicmapR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/VicmapR?color=ff69b4)](https://cran.r-project.org/package=VicmapR)
 <!-- [![Devel version](https://img.shields.io/badge/devel%20version-0.1.3-blue.svg)](https://github.com/JustinCally/VicmapR) -->
 <!-- [![Code size](https://img.shields.io/github/languages/code-size/JustinCally/VicmapR.svg)](https://github.com/JustinCally/VicmapR) -->
+[![R-CMD-check](https://github.com/JustinCally/VicmapR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JustinCally/VicmapR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of VicmapR is to provide functions to easily access Victorian
@@ -24,6 +24,17 @@ leverages code and a lazy querying approach developed by [Teucher et
 al. (2021)](https://joss.theoj.org/papers/10.21105/joss.02927) for the
 [{bcdata} R package](https://bcgov.github.io/bcdata/), which allows for
 a responsive and precise querying process.
+
+## Migration of Victoria’s Open Data Geoserver
+
+**From March 2023 (`VicmapR v0.2.0`) the way `VicmapR` obtains data has
+changed**
+
+In March 2023 the data platform used by `VicmapR` will be migrated with
+the legacy platform discontinued. Changes have been to the `VicmapR`
+package to allow for the conversion and translation of of code in an
+effort to ensure legacy code still works. However, the migration may
+have unseen consequences and users are encouraged to review code.
 
 ## Installation
 
@@ -44,19 +55,19 @@ remotes::install_github("JustinCally/VicmapR")
 ### Dependencies
 
 Currently, the ability to use accurate geometric filters using `VicmapR`
-requires GDAL &gt; 3.0. To see how to upgrade your version of GDAL and
+requires GDAL \> 3.0. To see how to upgrade your version of GDAL and
 link it to the `sf` package visit:
 <https://r-spatial.github.io/sf/#installing>
 
 ``` r
 library(sf)
 #> Warning: package 'sf' was built under R version 4.1.2
-#> Linking to GEOS 3.9.1, GDAL 3.4.0, PROJ 8.1.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
 sf::sf_extSoftVersion()
 #>           GEOS           GDAL         proj.4 GDAL_with_GEOS     USE_PROJ_H 
-#>        "3.9.1"        "3.4.0"        "8.1.1"         "true"         "true" 
+#>       "3.10.2"        "3.4.2"        "8.2.1"        "false"         "true" 
 #>           PROJ 
-#>        "8.1.1"
+#>        "8.2.1"
 ```
 
 ## Example
@@ -75,11 +86,19 @@ library(VicmapR)
 check_geoserver()
 #> [1] TRUE
 
-listLayers(pattern = "trees", ignore.case = T)
-#>                                Name
-#> 1 datavic:WATER_ISC2010_LARGE_TREES
-#>                                                           Title
-#> 1 2010 Index of Stream Condition - Large Trees polygon features
+listLayers(pattern = "watercourse", ignore.case = T)
+#>                                       Name                 Title
+#> 1 open-data-platform:hy_water_area_polygon hy_water_area_polygon
+#> 2        open-data-platform:hy_watercourse        hy_watercourse
+#> 3 open-data-platform:vmlite_hy_watercourse vmlite_hy_watercourse
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Abstract
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                        This layer is part of Vicmap Hydro and contains polygon features delineating hydrological features.\nIncludes; Lakes, Flats (subject to inundation),  Wetlands, Pondages (saltpan & sewrage), Watercourse Areas, Rapids & Waterfalls\nAttributed for name.\nCentroid layer also available.
+#> 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                This layer is part of Vicmap Hydro and contains line features delineating hydrological features.\nIncludes; Watercourses (ie channels, rivers & streams) & Connectors.\nAttributed for name.  Arcs run downstream.
+#> 3 This layer is part of Vicmap Lite and contains line features delineating hydrological features. Vicmap Lite datasets are suited for use between scales of 1: 250,000 and 1 : 5 million.  The linework was sourced from Vicmap Hydro. The level of attribute information, the number of features and the number of vertices has been simplified to suit the 1: 250,000  - 1 : 5 million scale range. The concept of a Scale Use Code has been introduced to help control the level of detail displayed.\n\nIf this dataset is used in conjunction with vmlite_hy_water_area, then the draw order should be such that vmlite_hy_watercourse is drawn 1st and vmlite_hy_water_area is drawn ontop.\n\nTHIS DATASET WAS LAST UPDATED IN NOVEMBER 2015
+#>                             metadataID
+#> 1 3984e659-2487-512d-b390-0de817979f21
+#> 2 cc373943-7848-5c21-9be4-7a92632e624c
+#> 3 9753ed02-4f2a-59a0-a673-73fbe934f58a
 ```
 
 ### Reading in data
@@ -99,60 +118,52 @@ in spatial data:
 melbourne <- sf::st_read(system.file("shapes/melbourne.geojson", package="VicmapR"), quiet = T)
 
 # Obtain a promise of what data will be returned for a given layer
-vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN")
-#> • Using collect() on this object will return 195432 features and 16
+vicmap_query(layer = "open-data-platform:hy_watercourse")
+#> • Using collect() on this object will return 1837836 features and 15
 #> • fields
 #> • At most six rows of the record are printed here
 #> ────────────────────────────────────────────────────────────────────────────────
-#> Simple feature collection with 6 features and 15 fields
+#> Simple feature collection with 6 features and 14 fields
 #> Geometry type: LINESTRING
 #> Dimension:     XY
-#> Bounding box:  xmin: 142.7675 ymin: -35.06905 xmax: 143.324 ymax: -35.04559
+#> Bounding box:  xmin: 141.5126 ymin: -34.40608 xmax: 142.3502 ymax: -34.37683
 #> Geodetic CRS:  GDA94
-#> # A tibble: 6 × 16
-#>   id                   PFI    UFI FEATURE_TYPE_CO… NAME  NAMED_FEATURE_ID ORIGIN
-#>   <chr>              <int>  <int> <chr>            <chr> <chr>            <chr> 
-#> 1 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> 2 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> 3 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> 4 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> 5 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> 6 VMHYDRO_WATERCOU… 8.55e6 2.55e6 watercourse_cha… <NA>  <NA>             2     
-#> # … with 9 more variables: CONSTRUCTION <chr>, USAGE <chr>, HIERARCHY <chr>,
-#> #   FEATURE_QUALITY_ID <int>, CREATE_DATE_PFI <dttm>, SUPERCEDED_PFI <chr>,
-#> #   CREATE_DATE_UFI <dttm>, OBJECTID <int>, geometry <LINESTRING [°]>
+#> # A tibble: 6 × 15
+#>   id       pfi    ufi featu…¹ name  named…² origin const…³ usage hiera…⁴ featu…⁵
+#>   <chr>  <int>  <int> <chr>   <chr> <chr>   <chr>  <chr>   <chr> <chr>     <int>
+#> 1 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    2      1       3     L          4762
+#> 2 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    2      1       3     L          4762
+#> 3 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    2      1       3     L          4762
+#> 4 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    2      1       3     L          4762
+#> 5 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    1      <NA>    1     L          4762
+#> 6 hy_w… 8.55e6 2.55e6 waterc… <NA>  <NA>    2      1       3     L          4762
+#> # … with 4 more variables: create_date_pfi <date>, superceded_pfi <chr>,
+#> #   create_date_ufi <date>, geometry <LINESTRING [°]>, and abbreviated variable
+#> #   names ¹​feature_type_code, ²​named_feature_id, ³​construction, ⁴​hierarchy,
+#> #   ⁵​feature_quality_id
 
 # Build a more specific query and collect the results
-vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>% # layer to query
-  filter(HIERARCHY == "L") %>% # simple filter for a column
+vicmap_query(layer = "open-data-platform:hy_watercourse") %>% # layer to query
+  filter(hierarchy == "L" & feature_type_code == 'watercourse_channel_drain') %>% # simple filter for a column
   filter(INTERSECTS(melbourne)) %>% # more advanced geometric filter
-  select(HIERARCHY, PFI) %>% 
+  select(hierarchy, pfi) %>% 
   collect()
-#> Note: method with signature 'DBIConnection#character' chosen for function 'dbQuoteIdentifier',
-#>  target signature 'wfsConnection#ident'.
-#>  "wfsConnection#ANY" would also be valid
-#> Note: method with signature 'DBIConnection#character' chosen for function 'dbQuoteIdentifier',
-#>  target signature 'wfsConnection#character'.
-#>  "wfsConnection#ANY" would also be valid
-#> Note: method with signature 'DBIConnection#character' chosen for function 'dbQuoteString',
-#>  target signature 'wfsConnection#character'.
-#>  "wfsConnection#ANY" would also be valid
-#> Simple feature collection with 8 features and 5 fields
+#> Simple feature collection with 8 features and 3 fields
 #> Geometry type: LINESTRING
 #> Dimension:     XY
 #> Bounding box:  xmin: 144.909 ymin: -37.81511 xmax: 144.9442 ymax: -37.78198
 #> Geodetic CRS:  GDA94
-#> # A tibble: 8 × 6
-#>   id                     PFI    UFI HIERARCHY OBJECTID                  geometry
-#>   <chr>                <int>  <int> <chr>        <int>          <LINESTRING [°]>
-#> 1 VMHYDRO_WATERCOURS… 1.46e7 3.63e7 L          1605003 (144.9365 -37.81511, 144…
-#> 2 VMHYDRO_WATERCOURS… 1.46e7 3.63e7 L          1582117 (144.929 -37.81409, 144.…
-#> 3 VMHYDRO_WATERCOURS… 1.46e7 3.63e7 L          1582120 (144.9288 -37.81417, 144…
-#> 4 VMHYDRO_WATERCOURS… 1.46e7 4.90e7 L          2432411 (144.9403 -37.78253, 144…
-#> 5 VMHYDRO_WATERCOURS… 1.75e7 4.90e7 L          2432413 (144.9415 -37.78232, 144…
-#> 6 VMHYDRO_WATERCOURS… 1.46e7 4.90e7 L          2432415 (144.9442 -37.78198, 144…
-#> 7 VMHYDRO_WATERCOURS… 1.93e7 5.44e7 L          2698790 (144.9287 -37.8033, 144.…
-#> 8 VMHYDRO_WATERCOURS… 1.46e7 5.44e7 L          2698805 (144.9201 -37.79069, 144…
+#> # A tibble: 8 × 4
+#>   id                          pfi hierarchy                             geometry
+#>   <chr>                     <int> <chr>                         <LINESTRING [°]>
+#> 1 hy_watercourse.1740229 19272791 L         (144.9287 -37.8033, 144.9186 -37.80…
+#> 2 hy_watercourse.1740597 14608551 L         (144.9201 -37.79069, 144.9202 -37.7…
+#> 3 hy_watercourse.1053715 14577596 L         (144.929 -37.81409, 144.9294 -37.81…
+#> 4 hy_watercourse.1053718 14577602 L         (144.9288 -37.81417, 144.9292 -37.8…
+#> 5 hy_watercourse.1081163 14608731 L         (144.9365 -37.81511, 144.9359 -37.8…
+#> 6 hy_watercourse.1633268 14608434 L         (144.9403 -37.78253, 144.9401 -37.7…
+#> 7 hy_watercourse.1633270 17520306 L         (144.9415 -37.78232, 144.9414 -37.7…
+#> 8 hy_watercourse.1633272 14615146 L         (144.9442 -37.78198, 144.9441 -37.7…
 ```
 
 VicmapR translates numerous geometric filter functions available in the

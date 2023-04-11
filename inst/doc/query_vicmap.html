@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-04-11" />
 
 <title>How to Query Vicmap Data</title>
 
@@ -339,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">How to Query Vicmap Data</h1>
-<h4 class="date">2023-03-31</h4>
+<h4 class="date">2023-04-11</h4>
 
 
 
@@ -386,7 +386,7 @@ what data will be retrieved.</p>
 function can be used to select the layer. The promise prints a sample of
 the data (max = 6 rows) as well as the dimensions (nrow and ncol).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># query the watercourse layer</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMHYDRO_WATERCOURSE_DRAIN&quot;</span>)</span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:hy_watercourse&quot;</span>)</span></code></pre></div>
 </div>
 <div id="adding-arguments-to-the-query" class="section level2">
 <h2>Adding arguments to the query</h2>
@@ -396,17 +396,17 @@ piping in of additional functions (e.g. <code>head()</code>,
 <p>The resulting query can be displayed using the
 <code>show_query()</code> function, which will list the WFS
 parameters.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMHYDRO_WATERCOURSE_DRAIN&quot;</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:hy_watercourse&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co">#return only 50 rows</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(HIERARCHY <span class="sc">==</span> <span class="st">&quot;L&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># filter the column &#39;HIERACHY&#39; to values of &#39;L&#39;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(HIERARCHY, PFI) <span class="sc">%&gt;%</span> <span class="co"># select columns &#39;HIERARCHY&#39; and &#39;PFI&#39;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hierarchy <span class="sc">==</span> <span class="st">&quot;L&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># filter the column &#39;HIERACHY&#39; to values of &#39;L&#39;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hierarchy, pfi) <span class="sc">%&gt;%</span> <span class="co"># select columns &#39;HIERARCHY&#39; and &#39;PFI&#39;</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">show_query</span>()</span></code></pre></div>
 <p>In order to return a spatial data.frame object (<code>sf</code>)
 <code>collect()</code> must be used.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>watercourse_data <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMHYDRO_WATERCOURSE_DRAIN&quot;</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>watercourse_data <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:hy_watercourse&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co">#return only 50 rows</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(HIERARCHY <span class="sc">==</span> <span class="st">&quot;L&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># filter the column &#39;HIERACHY&#39; to values of &#39;L&#39;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(HIERARCHY, PFI) <span class="sc">%&gt;%</span> <span class="co"># select columns &#39;HIERARCHY&#39; and &#39;PFI&#39;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hierarchy <span class="sc">==</span> <span class="st">&quot;L&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># filter the column &#39;HIERACHY&#39; to values of &#39;L&#39;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(hierarchy, pfi) <span class="sc">%&gt;%</span> <span class="co"># select columns &#39;HIERARCHY&#39; and &#39;PFI&#39;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(watercourse_data)</span></code></pre></div>
@@ -450,16 +450,16 @@ use of three different types of filter functions:
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_transform</span>(<span class="dv">4283</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Return data that intersects melbourne</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>rail_intersects <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMTRANS_TR_RAIL&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># layer to query</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>rail_intersects <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:tr_rail&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># layer to query</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">INTERSECTS</span>(melbourne)) <span class="sc">%&gt;%</span> <span class="co"># more advanced geometric filter</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>rail_bbox <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMTRANS_TR_RAIL&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>rail_bbox <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:tr_rail&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">BBOX</span>(sf<span class="sc">::</span><span class="fu">st_bbox</span>(melbourne))) <span class="sc">%&gt;%</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>rail_dwithin <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;datavic:VMTRANS_TR_RAIL&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">DWITHIN</span>(melbourne <span class="sc">%&gt;%</span> sf<span class="sc">::</span><span class="fu">st_centroid</span>(), <span class="at">distance =</span> <span class="dv">10000</span>, <span class="at">units =</span> <span class="st">&quot;meters&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>rail_dwithin <span class="ot">&lt;-</span> <span class="fu">vicmap_query</span>(<span class="at">layer =</span> <span class="st">&quot;open-data-platform:tr_rail&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">DWITHIN</span>(sf<span class="sc">::</span><span class="fu">st_centroid</span>(melbourne), <span class="at">distance =</span> <span class="dv">10000</span>, <span class="at">units =</span> <span class="st">&quot;meters&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>) <span class="sc">%&gt;%</span></span>

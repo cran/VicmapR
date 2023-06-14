@@ -15,8 +15,7 @@ geoserver_down <- !(check_geoserver(timeout = 5, quiet = TRUE))
 test_that("convert layer name works", {
   
   skip_if_offline()
-  skip_on_cran()
-  skip_if(geoserver_down)
+  skip_if(geoserver_down, message = "VicmapR geoserver not currently available")
   
   r1 <- vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>% 
     head(10) %>%
@@ -34,6 +33,10 @@ test_that("convert layer name works", {
 
 # Check conversion of select and filter works
 test_that("convert layer filter works", {
+  
+  skip_if_offline()
+  skip_if(geoserver_down, message = "VicmapR geoserver not currently available")
+  
   r3 <- vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>% 
     filter(HIERARCHY == "L" & PFI == 8547514) %>%
     collect()
@@ -48,6 +51,10 @@ test_that("convert layer filter works", {
 })
 
 test_that("convert layer select works", {
+  
+  skip_if_offline()
+  skip_if(geoserver_down, message = "VicmapR geoserver not currently available")
+  
   r5 <- vicmap_query(layer = "datavic:VMHYDRO_WATERCOURSE_DRAIN") %>% 
     select(HIERARCHY, PFI) %>%
     head(5) %>%

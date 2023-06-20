@@ -1,6 +1,6 @@
 Package: VicmapR
 Title: Access Victorian Spatial Data Through Web File Services (WFS)
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: 
     c(person(given = "Justin",
            family = "Cally",
@@ -54,7 +54,7 @@ Collate: 'globals.R' 'build-query.R' 'check_geoserver.R'
         'metadata.R' 'convert-layer-names.R' 'data.R'
 Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2023-06-14 06:36:21 UTC; justincally
+Packaged: 2023-06-19 13:34:07 UTC; justincally
 Author: Justin Cally [aut, cre] (<https://orcid.org/0000-0003-4584-2220>),
   Rachel Swain [ctb],
   Andy Teucher [aut] (<https://orcid.org/0000-0002-7840-692X>, bcdata
@@ -66,4 +66,4 @@ Author: Justin Cally [aut, cre] (<https://orcid.org/0000-0003-4584-2220>),
   Province of British Columbia [cph] (bcdata copyright)
 Maintainer: Justin Cally <justin.g.cally@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-06-14 08:22:16 UTC
+Date/Publication: 2023-06-20 17:40:02 UTC

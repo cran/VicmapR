@@ -1,6 +1,6 @@
-63a03df7b1a9eac22df2c8891e918916 *DESCRIPTION
+be43a88801bc81320a8893bb6069dccc *DESCRIPTION
 1f2f373b5b57d475128de726fb53e109 *NAMESPACE
-add71e21509131e142344cce71df6322 *NEWS.md
+9a32b6568a93ff154679a7707f5c6f48 *NEWS.md
 b6693024cf918195b0011c59d04262ef *R/build-query.R
 01d984ed18a1c58c4edac5bfa678d002 *R/check_geoserver.R
 916a161bc45813b881483f11fc6af297 *R/convert-layer-names.R
@@ -25,13 +25,13 @@ b56ff2b193ecba52f9ec7f3b10cca008 *R/utils-pipe.R
 d02bf39ef2a78fe64d3cdc62b1d2c373 *data/name_conversions.rda
 5b341ef680dfad90f2bb2e766db0f08a *inst/doc/beginner_vicmap.R
 cc8ba5014a4ac150086f7be94fcf98b1 *inst/doc/beginner_vicmap.Rmd
-3c3f22074ac228c79bacb569d627c76f *inst/doc/beginner_vicmap.html
+177959797a60b1c5952d10338935db2b *inst/doc/beginner_vicmap.html
 09155d2a14c89f38ac9116783e95a230 *inst/doc/migration_odp.R
 882a18ad9ce2eeb873d4188afed659a2 *inst/doc/migration_odp.Rmd
-d43ef851863e4ca17da999f1f2e51920 *inst/doc/migration_odp.html
+7fda10a57092cc74548f25194364b119 *inst/doc/migration_odp.html
 2b3e1dc295878451febf708ce0f5687e *inst/doc/query_vicmap.R
 e08ca4e798f7802f17ac3d5180152f41 *inst/doc/query_vicmap.Rmd
-2448a8e085f4278d110d16886963a317 *inst/doc/query_vicmap.html
+cb4f1c40e628ae13f10f020497271c2f *inst/doc/query_vicmap.html
 1c037acd8415ba7b273bb344b55772fc *inst/shapes/cycle_route.geojson
 2f6e772459e70c528bab6ef8dc811c41 *inst/shapes/melbourne.geojson
 9553ae742a498170d0d6de141cfa5041 *man/CQL.Rd
@@ -59,7 +59,7 @@ e775ade34b7e4a427b172b47bea94e88 *tests/testthat.R
 86e44e0d5c6a5420c1f549f492cbf1e0 *tests/testthat/test-check_geoserver.R
 10eac445bf48a49991b1cb64ec2c0599 *tests/testthat/test-citation.R
 d280a3f78b4ca1705b75f8a2b071dd88 *tests/testthat/test-convert-layer-names.R
-d39fd87e4e602081692a3e30c37f0c1e *tests/testthat/test-cql-predicates.R
+df41d9cfda88671df47ed590f70b74c3 *tests/testthat/test-cql-predicates.R
 56325c705b36788611fd1f4825e2478f *tests/testthat/test-filter.R
 f6e4a3c6d72648590782be3312af1ba6 *tests/testthat/test-listLayers.R
 6863aabc90f590096b3949dbedbc0947 *tests/testthat/test-polygonFormat.R
